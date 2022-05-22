@@ -47,22 +47,44 @@ function _shouldSkipTask(type, resource) {
 }
 
 function _shouldIgnoreCall(stackTrace) {
-    if (stackTrace && stackTrace.length) {
+    if (stackTrace && stackTrace.length && stackTrace.length > 1) {
         const rootFrame = stackTrace[stackTrace.length - 1]
-        // If called from Middy, stack trace length must be bigger than 4 to be taken care of
-        if (rootFrame.includes('@middy/core/') && stackTrace.length <= 4) {
+        // If called from Middy,
+        // stack trace length must be bigger than 2 (middy + user handler) to be taken care of
+        if (rootFrame.includes('@middy/core/') && stackTrace.length <= 2) {
             return true
         }
+        return false
     }
-    return false
+    return true
+}
+
+function _trimStackTrace(stackTrace) {
+    if (stackTrace && stackTrace.length) {
+        let deepestInternalFrame = -1
+        for (let i = 0; i < stackTrace.length; i++) {
+            const frame = stackTrace[i]
+            if (
+                frame.includes('(internal/') ||
+                frame.includes('(node:internal/')
+            ) {
+                deepestInternalFrame = i
+            }
+        }
+        if (deepestInternalFrame >= 0) {
+            return stackTrace.slice(deepestInternalFrame + 1)
+        }
+    }
+    return stackTrace
 }
 
 function _getOrCreateTaskGroup(type, stack) {
     const id = type + '@' + awsRequestId + '_' + _hashCode(stack)
     let taskGroup = taskGroups.get(id)
     if (!taskGroup) {
-        const stackTrace = stack.split('\n')
+        let stackTrace = stack.split('\n')
         stackTrace.shift()
+        stackTrace = _trimStackTrace(stackTrace)
         if (_shouldIgnoreCall(stackTrace)) {
             return
         }
