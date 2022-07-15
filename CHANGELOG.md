@@ -10,6 +10,13 @@ See [standard-version](https://github.com/conventional-changelog/standard-versio
 
 * Add `middy` agnostic standalone usage support by automatically wrapping user handler without code change and `middy`
 
+<a name="1.0.1"></a>
+# 1.0.1 (2022-05-22)
+
+### Improvements
+
+* Improve stacktrace trimming and ignoring
+
 <a name="1.0.0"></a>
 # 1.0.0 (2021-11-30)
 
