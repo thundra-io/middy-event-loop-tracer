@@ -73,7 +73,11 @@ To install the middleware, you can use NPM:
 npm install --save middy-event-loop-tracer
 ```
 
-**Note:** Requires `@middy/core` version `2.0.0`+
+### Notes on installation
+
+- The `middy-event-loop-tracer` requires `@middy/core` version `2.0.0`+. 
+
+- There is also **standalone** mode to be able to use `middy-event-loop-tracer` without `middy` framework. You can check [Standalone Usage (without Middy)](#standalone-usage-without-middy) section for the details.
 
 
 ## Usage
@@ -114,7 +118,23 @@ it can be configured by *environment variable* or *options* passed to middleware
 
   module.exports.handler = middy(handler).use(eventLoopTracer({timeoutMargin: 250}));
   ```
+  
+* **Optionally**, you can disable/enable event loop tracer without changing code even though it is registered to `middy` or self activated on bootstrap.
 
+  - **By environment variable:**
+  Set `MIDDY_ELT_ENABLE` environment variable to `false` to disable event loop tracer or to `true` (which is default) to enable tracer back.
+  ```
+  MIDDY_ELT_ENABLE=false
+  ```  
+
+## Standalone Usage (without Middy)
+
+If you want to use `middy-event-loop-tracer` standalone without `middy`, you need to activate standalone mode during bootstrap through environment variable without any code change. For activation, you need to set (or append to existing one) `NODE_OPTIONS` environment variable with the standalone mode bootstrap options to initialize tracer at startup:
+  ```
+  NODE_OPTIONS=-r middy-event-loop-tracer/src/bootstrap
+  ```  
+  
+To configure tracer in the standalone mode, you can use **environment variables** mentioned in the [Usage](#usage) section above.  
 
 ## Contributing
 
