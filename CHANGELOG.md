@@ -9,6 +9,7 @@ See [standard-version](https://github.com/conventional-changelog/standard-versio
 ### Features
 
 * Add `middy` agnostic standalone usage support by automatically wrapping user handler without code change and `middy`
+* Release as AWS Lambda layer (`arn:aws:lambda:{region}:273094347961:layer:middy-event-loop-tracer:{version}`)
 
 <a name="1.0.1"></a>
 # 1.0.1 (2022-05-22)
