@@ -1,5 +1,9 @@
 # middy-event-loop-tracer
 
+![build Status](https://github.com/serkan-ozal/middy-event-loop-tracer/actions/workflows/build.yml/badge.svg)
+![npm version](https://badge.fury.io/js/middy-event-loop-tracer.svg)
+![license](https://img.shields.io/badge/license-MIT-blue)
+
 Middy middleware for dumping active tasks with their stacktraces in the event queue just before AWS Lambda function timeouts. 
 So you can understand what was going on in the function when timeout happens. 
 
@@ -67,11 +71,28 @@ REPORT RequestId: 90dc31a4-10cf-4485-8c8e-914891b4cddb	Duration: 5005.41 ms	Bill
 
 ## Installation
 
+You can add `middy-event-loop-tracer` package into your AWS Lambda function either by NPM package or by AWS Lambda layer as shown below:
+
+### By NPM package
+
 To install the middleware, you can use NPM:
 
 ```
 npm install --save middy-event-loop-tracer
 ```
+
+### By AWS Lambda Layer
+
+You can also add `middy-event-loop-tracer` as layer into your AWS Lambda function.
+
+```
+arn:aws:lambda:${region}:273094347961:layer:middy-event-loop-tracer:${layer-version}
+
+```
+
+**Latest layer version:** ![middy-event-loop-tracer](https://api.globadge.com/v1/badgen/aws/lambda/layer/latest-version/us-east-1/273094347961/middy-event-loop-tracer) (badge powered by [Globadge serverless](https://www.globadge.com/badges/serverless))
+
+**Note:** In the ARN above, you need to replace `${region}` with the actual AWS region you deployed your AWS Lambda function. 
 
 ### Notes on installation
 
